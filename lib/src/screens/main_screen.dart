@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food_app/src/admin/pages/add_food_item.dart';
 
 //Pages
 import '../pages/home_page.dart';
@@ -30,7 +31,7 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   void initState() {
-    widget.model.fetchFood();
+    widget.model.fetchFoods();
 
     homePage = HomePage();
     orderPage = OrderPage();
@@ -46,36 +47,75 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      bottomNavigationBar: BottomNavigationBar(
-        onTap: (int index) {
-          setState(() {
-            currentTabIndex = index;
-            currentPage = pages[index];
-          });
-        },
-        currentIndex: currentTabIndex,
-        type: BottomNavigationBarType.fixed,
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            title: Text("Home"),
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          elevation: 0,
+          iconTheme: IconThemeData(color: Colors.black),
+          title: Text(
+            currentTabIndex == 0
+                ? "Food Delivery App"
+                : currentTabIndex == 1
+                    ? "All Food Items"
+                    : currentTabIndex == 2 ? "Orders" : "Profile",
+            style: TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+            ),
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.explore),
-            title: Text("Explore"),
+          centerTitle: true,
+        ),
+        drawer: Drawer(
+          child: Column(
+            children: <Widget>[
+              ListTile(
+                onTap: () {
+                  Navigator.of(context).pop();
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => AddFoodItem(),
+                  ));
+                },
+                leading: Icon(Icons.list),
+                title: Text(
+                  "Add Food Item",
+                  style: TextStyle(fontSize: 16.0),
+                ),
+              )
+            ],
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_cart),
-            title: Text("Orders"),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            title: Text("Profile"),
-          ),
-        ],
+        ),
+        resizeToAvoidBottomPadding: false,
+        bottomNavigationBar: BottomNavigationBar(
+          onTap: (int index) {
+            setState(() {
+              currentTabIndex = index;
+              currentPage = pages[index];
+            });
+          },
+          currentIndex: currentTabIndex,
+          type: BottomNavigationBarType.fixed,
+          items: <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              title: Text("Home"),
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.explore),
+              title: Text("Explore"),
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.shopping_cart),
+              title: Text("Orders"),
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person),
+              title: Text("Profile"),
+            ),
+          ],
+        ),
+        body: currentPage,
       ),
-      body: currentPage,
     );
   }
 }

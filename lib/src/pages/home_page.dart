@@ -23,8 +23,9 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: ListView(
-        padding: EdgeInsets.only(top: 50.0, left: 15.0, right: 15.0),
+        padding: EdgeInsets.only(left: 15.0, right: 15.0),
         children: <Widget>[
           HomeTopInfo(),
           FoodCategory(),
@@ -81,7 +82,9 @@ class _HomePageState extends State<HomePage> {
       child: BoughtFood(
         id: food.id,
         name: food.name,
-        imagePath: "assets/images/${food.imagePath}",
+        imagePath: (food.imagePath != null)
+            ? "assets/images/${food.imagePath}"
+            : "assets/images/noimage.png",
         category: food.category,
         discount: food.discount,
         price: food.price,
