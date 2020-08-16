@@ -65,6 +65,19 @@ class _MainScreenState extends State<MainScreen> {
             ),
           ),
           centerTitle: true,
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(
+                Icons.notifications_none,
+                color: Theme.of(context).primaryColor,
+              ),
+              onPressed: () {},
+            ),
+            IconButton(
+              icon: _buildShoppingCart(),
+              onPressed: () {},
+            )
+          ],
         ),
         drawer: Drawer(
           child: Column(
@@ -116,6 +129,37 @@ class _MainScreenState extends State<MainScreen> {
         ),
         body: currentPage,
       ),
+    );
+  }
+
+  Widget _buildShoppingCart() {
+    return Stack(
+      children: <Widget>[
+        Icon(
+          Icons.shopping_cart,
+          color: Theme.of(context).primaryColor,
+        ),
+        Positioned(
+          top: 0.0,
+          right: 0.0,
+          child: Container(
+            height: 15.0,
+            width: 15.0,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15.0 / 2),
+              color: Colors.red,
+            ),
+            child: Center(
+              child: Center(
+                child: Text(
+                  "1",
+                  style: TextStyle(fontSize: 12.0, color: Colors.white),
+                ),
+              ),
+            ),
+          ),
+        )
+      ],
     );
   }
 }
